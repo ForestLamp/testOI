@@ -1,0 +1,6 @@
+framework module Pods_testOI {
+  umbrella header "Pods-testOI-umbrella.h"
+
+  export *
+  module * { export * }
+}
