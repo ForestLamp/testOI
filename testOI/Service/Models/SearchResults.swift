@@ -17,6 +17,4 @@ struct SearchResults: Decodable {
 struct GoogleImageResult: Decodable {
     let original: String?
     let thumbnail: String?
-    let width = 20
-    let height = 20
 }

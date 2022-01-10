@@ -15,26 +15,23 @@ class CollectionViewController: UICollectionViewController {
     private let itemsPerRow: CGFloat = 2
     private let sectionInserts = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
 
-//    MARK: - Experemental
-    let countCells = 3
-    let offset: CGFloat = 2.0
-//    MARK: - Finish experemental
+    let countCells = 4
+    let offset: CGFloat = 10.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         collectionView.backgroundColor = .white
-        setupCollectionView()
         setupNavigationBar()
         setupSearchBar()
+        setupCollectionView()
     }
-
 // MARK: - Setup UI elements
     
     private func setupCollectionView() {
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
         collectionView.register(PhotosCell.self, forCellWithReuseIdentifier: PhotosCell.reuseId)
-        collectionView.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        collectionView.layoutMargins = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
         collectionView.contentInsetAdjustmentBehavior = .automatic
     }
     
@@ -43,10 +40,6 @@ class CollectionViewController: UICollectionViewController {
         titleLabel.text = "Test app for Very Interesting"
         titleLabel.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         titleLabel.textColor = #colorLiteral(red: 0.5019607843, green: 0.4980392157, blue: 0.4980392157, alpha: 1)
-        
-/* Не работает:
-        titleLabel.textAlignment = .center
-*/
         navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: titleLabel)
     }
     
@@ -57,7 +50,6 @@ class CollectionViewController: UICollectionViewController {
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.delegate = self
     }
-    
 // MARK: - UICollectionViewDataSourse, UICillectionViewDelegate
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -76,7 +68,7 @@ class CollectionViewController: UICollectionViewController {
         func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
             print(searchText)
             
-            timer = Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { (_) in
+            timer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false, block: { (_) in
                 self.networkDataFetcher.fetchImages(searhTerm: searchText) {[weak self](searchResults) in
                     guard let fetchedPhotos = searchResults else { return }
                     self?.photos = fetchedPhotos.imageResults
@@ -90,24 +82,7 @@ class CollectionViewController: UICollectionViewController {
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension CollectionViewController: UICollectionViewDelegateFlowLayout {
-    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        let photo = photos[indexPath.item]
-//        let paddingSpace = sectionInserts.left * (itemsPerRow + 1)
-//        let availableWidth = view.frame.width - paddingSpace
-//        let widthPerItem = availableWidth / itemsPerRow
-//        let height = CGFloat(photo.height) * widthPerItem / CGFloat(photo.width)
-//        return CGSize(width: widthPerItem, height: height)
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-//        return sectionInserts
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-//        return sectionInserts.left
-//    }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let frameCV = collectionView.frame
         let widthCell = frameCV.width / CGFloat(countCells)
