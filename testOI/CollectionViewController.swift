@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  CollectionViewController.swift
 //  testOI
 //
 //  Created by Alex Ch. on 04.01.2022.
@@ -7,13 +7,18 @@
 
 import UIKit
 
-class ViewController: UICollectionViewController {
+class CollectionViewController: UICollectionViewController {
 
     var networkDataFetcher = NetworkDataFetcher()
     private var timer: Timer?
     private var photos = [GoogleImageResult]()
     private let itemsPerRow: CGFloat = 2
     private let sectionInserts = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+
+//    MARK: - Experemental
+    let countCells = 3
+    let offset: CGFloat = 2.0
+//    MARK: - Finish experemental
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,7 +72,7 @@ class ViewController: UICollectionViewController {
 }
 // MARK: - UISearchBarDelegate
     
-    extension ViewController: UISearchBarDelegate {
+    extension CollectionViewController: UISearchBarDelegate {
         func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
             print(searchText)
             
@@ -84,23 +89,31 @@ class ViewController: UICollectionViewController {
 
 // MARK: - UICollectionViewDelegateFlowLayout
 
-extension ViewController: UICollectionViewDelegateFlowLayout {
+extension CollectionViewController: UICollectionViewDelegateFlowLayout {
+    
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        let photo = photos[indexPath.item]
+//        let paddingSpace = sectionInserts.left * (itemsPerRow + 1)
+//        let availableWidth = view.frame.width - paddingSpace
+//        let widthPerItem = availableWidth / itemsPerRow
+//        let height = CGFloat(photo.height) * widthPerItem / CGFloat(photo.width)
+//        return CGSize(width: widthPerItem, height: height)
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+//        return sectionInserts
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+//        return sectionInserts.left
+//    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let photo = photos[indexPath.item]
-        let paddingSpace = sectionInserts.left * (itemsPerRow + 1)
-        let availableWidth = view.frame.width - paddingSpace
-        let widthPerItem = availableWidth / itemsPerRow
-        let height = CGFloat(photo.height) * widthPerItem / CGFloat(photo.width)
-        return CGSize(width: widthPerItem, height: height)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return sectionInserts
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return sectionInserts.left
+        let frameCV = collectionView.frame
+        let widthCell = frameCV.width / CGFloat(countCells)
+        let heightCell = widthCell
+        let spacing = CGFloat((countCells + 1)) * offset / CGFloat(countCells)
+        return CGSize(width: widthCell - spacing, height: heightCell - (offset * 2))
     }
     
 }

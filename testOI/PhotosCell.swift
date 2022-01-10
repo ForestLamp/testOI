@@ -15,8 +15,7 @@ class PhotosCell: UICollectionViewCell {
     private let photoImageView: UIImageView = {
        let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.backgroundColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
@@ -46,8 +45,8 @@ class PhotosCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        updateSelectedState()
         setupPhotoImageView()
+        updateSelectedState()
     }
     
     private func setupPhotoImageView() {
